@@ -1,0 +1,10 @@
+version: "2"
+services:
+    bot:
+        build: ./bot
+        image: my_discord_assistant/bot:0.1.0
+        restart: always
+        command: python run.py
+        environment:
+            - DISCORD_TOKEN=${DISCORD_TOKEN}
+            - PYTHONUNBUFFERED=0
