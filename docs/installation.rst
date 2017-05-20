@@ -7,19 +7,12 @@ Installation
 It is recommended to run Assistant using docker. It saves you the hassle of 
 manually installing dependencies.
 
------------
-With Docker
------------
+------
+Docker
+------
 
-Prerequisites
--------------
-
-#. `docker <https://www.docker.com/community-edition#/download>`_
-#. `git <https://git-scm.com/downloads>`_
-
-Steps
------
-
+#. Install `docker <https://www.docker.com/community-edition#/download>`_
+#. Install `git <https://git-scm.com/downloads>`_
 #. Clone the Assistant github repository:
 
 	.. code-block:: shell
@@ -38,20 +31,13 @@ Steps
 		docker-compose build
 		docker-compose up
 
---------------
-Without Docker
---------------
+------
+Normal
+------
 
-Prerequisites
--------------
-
-#. `git <https://git-scm.com/downloads>`_
-#. `Python 3.6+ <https://www.python.org/downloads/>`_
-#. `NodeJs 6.7.0+ <https://nodejs.org/en/download/>`_ (*for evaljs*)
-
-Steps
------
-
+#. Install `git <https://git-scm.com/downloads>`_
+#. Install `Python 3.6+ <https://www.python.org/downloads/>`_
+#. Install `NodeJs 6.7.0+ <https://nodejs.org/en/download/>`_ (*for evaljs*)
 #. Clone the Assistant github repository:
 
 	.. code-block:: shell
