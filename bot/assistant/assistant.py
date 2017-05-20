@@ -40,7 +40,7 @@ class Assistant(Common, discord.Client):
     # noinspection PyBroadException
     async def _assistant_handle_event(self, callback, event_name, *args, **kwargs):
         try:
-            await callback(self, *args, **kwargs)
+            await callback(*args, **kwargs)
         except asyncio.CancelledError:
             pass
         except Exception:
@@ -174,9 +174,19 @@ class Assistant(Common, discord.Client):
         module = importlib.import_module(name)
         module.load(self)
 
-    # NOTE:
+    # A convenience decorator for adding event listeners.
+    def event_listener(self, name=None):
+        def decorator(func):
+            self.add_event_listener(func, name)
+            return func
+        return decorator
+
+    # WARNING
+    # -------
     # This on_message is responsible for handling all the
-    # commands.This should never be removed from here.
+    # commands.This should never be removed from here, neither
+    # should a new on_message be added. Otherwise, it will
+    # break the way commands work.
     async def on_message(self, message):
         if message.author.id == self.user.id:
             split_content = message.content.split()

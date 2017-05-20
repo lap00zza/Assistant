@@ -23,8 +23,10 @@ import os
 
 my_assistant = Assistant()
 
-async def on_ready(ctx):
-    print("Login Details\nUsername: {}\nUser ID: {}\n---".format(ctx.user.name, ctx.user.id))
+
+@my_assistant.event_listener()
+async def on_ready():
+    print("Login Details\nUsername: {}\nUser ID: {}\n---".format(my_assistant.user.name, my_assistant.user.id))
     commands = "Loaded commands"
     for c in my_assistant.commands_list:
         commands += "name: {} | description: {}\n".format(c, my_assistant.commands_list[c].description)
@@ -36,5 +38,5 @@ async def _ping(message):
     await my_assistant.send_message(message.channel, "pong")
 
 my_assistant.load_modules("modules.default")
-my_assistant.add_event_listener(on_ready)
+# my_assistant.add_event_listener(on_ready)
 my_assistant.run(os.environ.get("DISCORD_TOKEN"), bot=False)
