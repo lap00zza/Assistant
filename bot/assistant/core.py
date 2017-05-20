@@ -19,7 +19,6 @@ along with Assistant.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import asyncio
-import inspect
 from typing import Dict
 
 __all__ = ["Command", "Common", "command"]
@@ -42,7 +41,6 @@ class Command:
         self.name = name
         self.callback = callback
         self.description = kwargs.get("description", "")
-        self.parameters = inspect.signature(callback)
         self.instance = None
 
     def set_instance(self, instance):
@@ -56,9 +54,6 @@ class Command:
 
 
 class Common:
-    """
-    All the common functionality for Assistant.
-    """
     def __init__(self, **kwargs):
 
         # Type hinting is used for some of the variables.
@@ -100,12 +95,14 @@ def command(name=None, **kwargs):
     ----------
     name: [Optional] str
         The name of the command. If a name is not provided then the functions
-        name ``func.__name_`` is used instead.
+        name ``func.__name__`` is used instead.
 
     Example
     -------
     .. code-block:: python
 
+        # you don't always have to specify a name.
+        # Although specifying a name can be helpful.
         @command()
         async def my_command(ctx):
             await ctx.send_message(message.channel, "Hello")
@@ -120,6 +117,7 @@ def command(name=None, **kwargs):
         The callback function is not a coroutine.
     """
 
+    # TODO: cmd names should be a single word
     def decorator(func):
         if not asyncio.iscoroutinefunction(func):
             raise TypeError("Command must be a coroutine.")

@@ -35,6 +35,6 @@ async def on_ready(ctx):
 async def _ping(message):
     await my_assistant.send_message(message.channel, "pong")
 
-my_assistant.load_modules("modules.utility_commands")
+my_assistant.load_modules("modules.default")
 my_assistant.add_event_listener(on_ready)
 my_assistant.run(os.environ.get("DISCORD_TOKEN"), bot=False)

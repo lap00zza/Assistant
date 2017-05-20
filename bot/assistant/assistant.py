@@ -26,7 +26,6 @@ from .core import Common, Command
 
 
 class Assistant(Common, discord.Client):
-
     def __init__(self, **kwargs):
         Common.__init__(self)
         discord.Client.__init__(self, **kwargs)
@@ -89,7 +88,7 @@ class Assistant(Common, discord.Client):
         else:
             self._assistant_listeners[event_name] = [callback]
 
-    def remove_event_listener(self, callback, event):
+    def remove_event_listener(self, callback, event=None):
         """
         Remove an event listener.
 
@@ -107,14 +106,16 @@ class Assistant(Common, discord.Client):
 
     def add_module(self, module):
         """
-        Add a new module to Assistant. Modules are collection of commands
-        and custom event listeners. They are stateful. Sample modules can
-        be found in ``/bot/modules`` directory.
+        Add a new module to Assistant.
 
         Parameters
         ----------
         module
             The module to add.
+
+        Notes
+        -----
+        This function is called from the ``load`` function of the module.
         """
         members = inspect.getmembers(module)
         self.modules[type(module).__name__] = module
@@ -129,6 +130,47 @@ class Assistant(Common, discord.Client):
                 self.add_command(member)
 
     def load_modules(self, name):
+        """
+        Load a module. Modules are collection of commands and custom event listeners.
+        They are stateful. Sample modules can be found in ``/bot/modules`` directory.
+        **All modules must have a load function.**
+
+        Parameters
+        ----------
+        name: str
+            The name of the module to load. See Notes for clarification.
+
+        Raises
+        ------
+        AttributeError
+            Module does not have a load function.
+
+        TypeError
+            You are trying to access a module using relative path. See Notes for correct
+            name convention.
+
+        Notes
+        -----
+            ::
+
+                +---run.py (or any file with run())
+                |
+                +---subdirectory---+---hello.py
+                                   |
+                                   +---hello_again.py
+
+        Modules should be placed in a sub-directory from where run() is used. For example,
+        (*using the above diagram as reference*) if the name of your module file is `hello.py`
+        and it is placed inside subdirectory then run.py will look something like this:
+            .. code-block:: python
+
+                from assistant import Assistant
+                my_assistant = Assistant()
+                # Remember, no need to append .py
+                my_assistant.load_modules("subdirectory.hello")
+                my_assistant.run()
+
+        """
         module = importlib.import_module(name)
         module.load(self)
 
