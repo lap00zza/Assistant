@@ -1,16 +1,5 @@
-## Assistant
-A simple discord assistant bot. Assistant is fully customizable.
+<h2 align="center">Assistant</h2>
+[![Documentation Status](https://readthedocs.org/projects/assistant/badge/?version=latest)](http://assistant.readthedocs.io/en/latest/?badge=latest)
 
-### Prerequisite
-1. Docker
-2. Docker Compose
-
-### Installation
-```shell
-git clone https://github.com/lap00zza/Assistant.git
-cd Assistant
-docker-compose build
-docker-compose up
-```
-
-**Important:** set the environment variable `DISCORD_TOKEN` to your token.
+### Documentation and Usage
+http://assistant.readthedocs.io/en/latest/
