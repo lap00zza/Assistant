@@ -151,34 +151,59 @@ class Assistant(Common, discord.Client):
 
         Notes
         -----
-            ::
+        ::
 
-                +---run.py (or any file with run())
-                |
-                +---subdirectory---+---hello.py
-                                   |
-                                   +---hello_again.py
+            +---run.py (or any file with run())
+            |
+            +---subdirectory---+---hello.py
+                               |
+                               +---hello_again.py
 
         Modules should be placed in a sub-directory from where run() is used. For example,
         (*using the above diagram as reference*) if the name of your module file is `hello.py`
         and it is placed inside subdirectory then run.py will look something like this:
-            .. code-block:: python
 
-                from assistant import Assistant
-                my_assistant = Assistant()
-                # Remember, no need to append .py
-                my_assistant.load_modules("subdirectory.hello")
-                my_assistant.run()
+        .. code-block:: python
 
+            from assistant import Assistant
+            my_assistant = Assistant()
+            # Remember, no need to append .py
+            my_assistant.load_modules("subdirectory.hello")
+            my_assistant.run()
         """
         module = importlib.import_module(name)
         module.load(self)
 
     # A convenience decorator for adding event listeners.
-    def event_listener(self, name=None):
+    def event_listener(self, event=None):
+        """
+        This function is a decorator. It is a convenience wrapper for
+        :meth:`add_event_listener`.
+
+        Parameters
+        ----------
+        event: [Optional] str
+            The name of the event to listen to. This can be a custom event
+            or a standard `discord event <http://discordpy.readthedocs.io/en/latest/api.html#event-reference>`_ .
+
+        Examples
+        --------
+        .. code-block:: python
+
+            @my_assistant.event_listener()
+            async def on_message(message):
+                print(message.content)
+
+            @my_assistant.event_listener(event="on_ready")
+            async def my_awesome_function():
+                print("Awesome! We are ready to roll.")
+
+            @my_assistant.event_listener(event="my_custom_event")
+            async def my_awesome_function():
+                print("Awesome! We are ready to roll once again.")
+        """
         def decorator(func):
-            self.add_event_listener(func, name)
-            return func
+            self.add_event_listener(func, event)
         return decorator
 
     # WARNING

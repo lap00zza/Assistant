@@ -28,6 +28,9 @@ class UtilityCommands:
         self.assistant = assistant
         self.state = 0
 
+        # Register the event listeners.
+        # self.assistant.event_listener(event="on_message")(self.handle_message)
+
     @command(description="A sample command to demonstrate stateful behaviour.")
     async def test_state(self, message):
         self.state += 1
@@ -56,6 +59,9 @@ class UtilityCommands:
             decoded_res = decoded_res[:1900] + "\n[...]"
 
         await self.assistant.send_message(message.channel, "```\n{}```".format(decoded_res))
+
+    # async def handle_message(self, message):
+    #     print(message.content)
 
 
 def load(assistant):
