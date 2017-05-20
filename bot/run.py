@@ -37,5 +37,5 @@ async def on_ready():
         commands += "name: {} | description: {}\n".format(c, my_assistant.commands_list[c].description)
     print(commands)
 
-my_assistant.load_modules("modules.default")
+my_assistant.load_module("modules.default")
 my_assistant.run(os.environ.get("DISCORD_TOKEN"), bot=False)

@@ -129,7 +129,7 @@ class Assistant(Common, discord.Client):
                 member.set_instance(module)
                 self.add_command(member)
 
-    def load_modules(self, name):
+    def load_module(self, name):
         """
         Load a module. Modules are collection of commands and custom event listeners.
         They are stateful. Sample modules can be found in ``/bot/modules`` directory.
@@ -153,13 +153,13 @@ class Assistant(Common, discord.Client):
         -----
         ::
 
-            +---run.py (or any file with run())
+            +---run.py (or any file with run)
             |
             +---subdirectory---+---hello.py
                                |
                                +---hello_again.py
 
-        Modules should be placed in a sub-directory from where run() is used. For example,
+        Modules should be placed in a sub-directory from where ``run()`` is used. For example,
         (*using the above diagram as reference*) if the name of your module file is `hello.py`
         and it is placed inside subdirectory then run.py will look something like this:
 
@@ -168,7 +168,7 @@ class Assistant(Common, discord.Client):
             from assistant import Assistant
             my_assistant = Assistant()
             # Remember, no need to append .py
-            my_assistant.load_modules("subdirectory.hello")
+            my_assistant.load_module("subdirectory.hello")
             my_assistant.run()
         """
         module = importlib.import_module(name)
