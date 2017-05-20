@@ -59,7 +59,7 @@ Steps
 		git clone https://github.com/lap00zza/Assistant.git
 		cd Assistant/bot
 
-#. Intall the dependencies
+#. Install the dependencies
 	
 	.. code-block:: shell
 		

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Assistant documentation build configuration file, created by
-# sphinx-quickstart on Thu May 18 23:37:17 2017.
+# sphinx-quickstart on Sat May 20 11:32:22 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -20,6 +20,8 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath("../bot"))
+on_rtd = os.getenv('READTHEDOCS') == 'True'
+
 
 # -- General configuration ------------------------------------------------
 
@@ -32,18 +34,12 @@ sys.path.insert(0, os.path.abspath("../bot"))
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.githubpages'
+    'sphinx.ext.napoleon'
 ]
 
-# --- Custom
-# We need sphinx to use numpy style docstrings. So we will use napoleon
-extensions.append("sphinx.ext.napoleon")
-
 # Add any paths that contain templates here, relative to this directory.
-# templates_path = ['_templates']
+templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -91,7 +87,10 @@ todo_include_todos = False
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+if on_rtd:
+    html_theme = 'sphinx_rtd_theme'
+else:
+    html_theme = 'alabaster'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -102,7 +101,7 @@ html_theme = 'alabaster'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ['_static']
+html_static_path = ['_static']
 
 # -- Options for HTMLHelp output ------------------------------------------
 
